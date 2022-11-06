@@ -1,0 +1,22 @@
+name: continuous integration
+ on: [push, pull_request]
+ jobs:
+  InstallAndTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: install
+        run: |
+          sudo apt update
+          sudo apt install python3
+          python -m pip install --upgrade pip
+          pip install setuptools
+          sudo pip install .
+      - name: linters
+        run: |
+          pylint ml_project
+          flake8 ml_project
+      - name: tests
+        run: |
+          python -m unittest discover tests

@@ -6,7 +6,7 @@ Installation:
 ~~~
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install .
 ~~~
 Usage:
 ~~~
@@ -21,5 +21,5 @@ python ml_project/predict_pipeline.py configs/predict_config.yaml
 
 Test:
 ~~~
-pytest tests/
+python -m unittest discover tests
 ~~~
