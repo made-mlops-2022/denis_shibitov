@@ -13,3 +13,4 @@ ml_project.egg-info/
 results/**/*.csv
 results/**/*.pkl
 results/**/*.json
+tests/random_train_data.csv

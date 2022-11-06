@@ -1,9 +1,15 @@
+import os
 import unittest
 import numpy as np
 import pandas as pd
 
 from ml_project.features import SquareTransformer
-from ml_project.train_pipeline import run_train_pipeline
+from ml_project.train_pipeline import train_pipeline
+
+from ml_project.entities import (
+    read_training_pipeline_params,
+    read_predict_pipeline_params
+)
 
 
 class SquareTransformerTest(unittest.TestCase):
@@ -35,13 +41,28 @@ class SquareTransformerTest(unittest.TestCase):
         self.assertEqual(list(data), list(result.values))
 
 
+class TrainPredictPipelineTest(unittest.TestCase):
+    def test_train_pipeline(self):
+        config_path = "configs/train_config.yaml"
+        model_path, metrics = train_pipeline(config_path)
+
+        config = read_training_pipeline_params(config_path)
+
+        self.assertEqual(model_path, config.output_model_path)
+        self.assertEqual(os.path.exists(config.output_model_path), True)
+        self.assertEqual(os.path.exists(config.metric_path), True)
+
+        above_limit = metrics["accuracy"] > 0.5
+        self.assertEqual(above_limit, True)
+
+
 class RandomTrainDataPipelineTest(unittest.TestCase):
     def test_random_train_data_test(self):
         make_random_train_data(300)
 
-        run_train_pipeline("tests/random_train_config.yaml")
-        self.assertEqual(0, 0)
-
+        model_path, metrics = train_pipeline("tests/random_train_config.yaml")
+        above_limit = metrics["accuracy"] > 0.2
+        self.assertEqual(above_limit, True)
 
 
 def make_random_train_data(rows_count=500):

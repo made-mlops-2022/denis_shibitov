@@ -21,6 +21,6 @@ setuptools.setup(
         "Natural Language :: English",
         "Programming Language :: Python",
     ],
-    python_requires=">=3.7",
+    python_requires="==3.7.9",
     install_requires=required
 )

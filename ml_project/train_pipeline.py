@@ -31,7 +31,7 @@ from ml_project.models import (
 logger = logging.getLogger(__name__)
 
 
-def run_train_pipeline(config_path):
+def train_pipeline(config_path):
     """Runs train pipeline"""
     training_pipeline_params = read_training_pipeline_params(config_path)
     logger.info(
@@ -86,6 +86,7 @@ def run_train_pipeline(config_path):
         predicts,
         val_target
     )
+    logger.info("metrics: %s", metrics)
 
     save_object(metrics, training_pipeline_params.metric_path, save_as="json")
     logger.info(
@@ -107,7 +108,7 @@ def run_train_pipeline(config_path):
 @click.argument("config_path")
 def train_pipeline_command(config_path: str):
     """Train pipeline entry point"""
-    run_train_pipeline(config_path)
+    train_pipeline(config_path)
 
 
 if __name__ == "__main__":
