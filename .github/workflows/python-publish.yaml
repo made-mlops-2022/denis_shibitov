@@ -11,7 +11,7 @@ jobs:
           sudo apt update
           sudo apt install python3
           python -m pip install --upgrade pip
-          python -m pip pip install setuptools
+          python -m pip install setuptools
           python -m pip install flake8 pylint
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           sudo pip install .
