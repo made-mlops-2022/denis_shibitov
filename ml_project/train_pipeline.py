@@ -30,13 +30,6 @@ from ml_project.models import (
 
 
 logger = logging.getLogger(__name__)
-handler = logging.StreamHandler(sys.stdout)
-formatter = logging.Formatter(
-    "%(asctime)s\t%(levelname)s\t%(name)s\t%(message)s"
-)
-handler.setFormatter(formatter)
-logger.setLevel(logging.INFO)
-logger.addHandler(handler)
 
 
 def run_train_pipeline(training_pipeline_params):

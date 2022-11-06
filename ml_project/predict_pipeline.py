@@ -1,6 +1,5 @@
 """ Predicting pipline for model """
 # pylint: disable=E0401, E0611, E1120
-import sys
 import logging
 import click
 import pandas as pd
@@ -18,9 +17,6 @@ from ml_project.models.model_fit_predict import (
 
 
 logger = logging.getLogger(__name__)
-handler = logging.StreamHandler(sys.stdout)
-logger.setLevel(logging.INFO)
-logger.addHandler(handler)
 
 
 def predict_pipeline(config_path: str):

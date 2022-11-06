@@ -36,7 +36,7 @@ def save_object(obj: object, path: str, save_as=BINARY):
         with open(path, "wb") as file:
             pickle.dump(obj, file)
     elif save_as == JSON:
-        with open(path, "w") as file:
+        with open(path, "w", encoding='utf-8') as file:
             json.dump(obj, file)
     else:
         raise NotImplementedError()
@@ -48,7 +48,7 @@ def load_object(path: str, load_as=BINARY) -> object:
         with open(path, "rb") as file:
             return pickle.load(file)
     elif load_as == JSON:
-        with open(path, "r") as file:
+        with open(path, "r", encoding='utf-8') as file:
             return json.load(file)
     else:
         raise NotImplementedError()

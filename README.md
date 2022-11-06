@@ -1,14 +1,15 @@
 MADE MLOps
 ==============================
-Homework 1 project
+###### homework 1
+### Денис Шибитов
 
-Installation: 
+Установка: 
 ~~~
 python -m venv .venv
 source .venv/bin/activate
 pip install .
 ~~~
-Usage:
+Запуск обучения:
 ~~~
 python ml_project/train_pipeline.py configs/train_config.yaml
 ~~~
