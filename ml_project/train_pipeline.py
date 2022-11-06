@@ -1,5 +1,4 @@
 """Train pipeline module"""
-import sys
 import logging
 
 import click
