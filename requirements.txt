@@ -7,5 +7,3 @@ marshmallow==3.18.0
 marshmallow-dataclass==8.5.9
 PyYAML==6.0
 numpy==1.21.6
-pyflakes==2.5.0
-pylint==2.15.5
