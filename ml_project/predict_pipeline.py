@@ -27,7 +27,7 @@ def predict_pipeline(config_path: str):
     """ predict pipeline """
     predict_pipeline_params = read_predict_pipeline_params(config_path)
     logger.info(
-        'start predict pipeline with params %s',
+        "start predict pipeline with params %s",
         predict_pipeline_params
     )
 
@@ -35,6 +35,7 @@ def predict_pipeline(config_path: str):
 
     if predict_pipeline_params.target_col:
         data = data.drop(predict_pipeline_params.target_col, 1)
+    logger.info("income data shape: %s", data.shape)
 
     logger.info('predicting..')
     inference_pipeline = load_object(predict_pipeline_params.model_path)
