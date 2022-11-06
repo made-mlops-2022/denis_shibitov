@@ -5,10 +5,16 @@ import pandas as pd
 
 from ml_project.features import SquareTransformer
 from ml_project.train_pipeline import train_pipeline
+from ml_project.predict_pipeline import predict_pipeline
 
 from ml_project.entities import (
     read_training_pipeline_params,
     read_predict_pipeline_params
+)
+
+from ml_project.data import (
+    save_object,
+    load_object
 )
 
 
@@ -41,6 +47,20 @@ class SquareTransformerTest(unittest.TestCase):
         self.assertEqual(list(data), list(result.values))
 
 
+class DifferentModulesTest(unittest.TestCase):
+    def test_save_load_object(self):
+        obj = {"a": "100", "b": 300}
+        obj_path = "tests/obj_for_test"
+
+        save_object(obj, obj_path, save_as="json")
+        loaded_obj = load_object(obj_path, load_as="json")
+        self.assertEqual(obj, loaded_obj)
+
+        save_object(obj, obj_path, save_as="binary")
+        loaded_obj = load_object(obj_path, load_as="binary")
+        self.assertEqual(obj, loaded_obj)
+
+
 class TrainPredictPipelineTest(unittest.TestCase):
     def test_train_pipeline(self):
         config_path = "configs/train_config.yaml"
@@ -54,6 +74,19 @@ class TrainPredictPipelineTest(unittest.TestCase):
 
         above_limit = metrics["accuracy"] > 0.5
         self.assertEqual(above_limit, True)
+
+    def test_train_predict_pipeline(self):
+        train_config_path = "configs/train_config.yaml"
+        predict_config_path = "configs/predict_config.yaml"
+        train_pipeline(train_config_path)
+        predict_pipeline(predict_config_path)
+
+        predict_config = read_predict_pipeline_params(predict_config_path)
+        self.assertEqual(os.path.exists(predict_config.predict_result_path), True)
+
+        test_data = pd.read_csv(predict_config.data_path)
+        predict = pd.read_csv(predict_config.predict_result_path)
+        self.assertEqual(len(test_data), len(predict))
 
 
 class RandomTrainDataPipelineTest(unittest.TestCase):

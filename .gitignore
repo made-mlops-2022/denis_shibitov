@@ -4,6 +4,8 @@
 .venv/
 ml_project.egg-info/
 **/__pycache__/
+build/
+.pytest_cache/
 
 
 # Files
@@ -14,3 +16,4 @@ results/**/*.csv
 results/**/*.pkl
 results/**/*.json
 tests/random_train_data.csv
+tests/obj_for_test
