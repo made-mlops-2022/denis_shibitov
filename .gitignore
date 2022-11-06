@@ -1,0 +1,15 @@
+# Folders
+.idea/
+.ipynb_checkpoints/
+.venv/
+ml_project.egg-info/
+**/__pycache__/
+
+
+# Files
+*.pyc
+*.coverage
+*.log
+results/**/*.csv
+results/**/*.pkl
+results/**/*.json
