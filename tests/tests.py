@@ -9,12 +9,19 @@ from ml_project.predict_pipeline import predict_pipeline
 
 from ml_project.entities import (
     read_training_pipeline_params,
-    read_predict_pipeline_params
+    read_predict_pipeline_params,
+    SplittingParams,
+    FeatureParams
 )
 
 from ml_project.data import (
     save_object,
-    load_object
+    load_object,
+    split_train_val_data
+)
+
+from ml_project.features import (
+    extract_target
 )
 
 
@@ -33,7 +40,10 @@ class SquareTransformerTest(unittest.TestCase):
         transformer = SquareTransformer()
         result = transformer.transform(data)
 
-        self.assertListEqual(list(transformed_data.columns), list(result.columns))
+        self.assertListEqual(
+            list(transformed_data.columns),
+            list(result.columns)
+        )
         self.assertEqual(transformed_data.values[0][0], result.values[0][0])
         self.assertEqual(transformed_data.values[0][1], result.values[0][1])
         self.assertEqual(transformed_data.values[1][0], result.values[1][0])
@@ -60,6 +70,23 @@ class DifferentModulesTest(unittest.TestCase):
         loaded_obj = load_object(obj_path, load_as="binary")
         self.assertEqual(obj, loaded_obj)
 
+    def test_split(self):
+        data = pd.read_csv("source_data/heart_cleveland_upload.csv")
+        params = SplittingParams()
+        params.val_size = 0.2
+        params.random_state = 42
+        train_data, val_data = split_train_val_data(data, params)
+        self.assertEqual(len(train_data), 237)
+        self.assertEqual(len(val_data), 60)
+
+        self.assertEqual(train_data.shape[1], val_data.shape[1])
+
+    def test_extract_target(self):
+        data = pd.read_csv("source_data/heart_cleveland_upload.csv")
+        params = FeatureParams([], [], "condition")
+        target_values = extract_target(data, params)
+        self.assertEqual(target_values[0], data.iloc[0][params.target_col])
+
 
 class TrainPredictPipelineTest(unittest.TestCase):
     def test_train_pipeline(self):
@@ -82,7 +109,10 @@ class TrainPredictPipelineTest(unittest.TestCase):
         predict_pipeline(predict_config_path)
 
         predict_config = read_predict_pipeline_params(predict_config_path)
-        self.assertEqual(os.path.exists(predict_config.predict_result_path), True)
+        self.assertEqual(
+            os.path.exists(predict_config.predict_result_path),
+            True
+        )
 
         test_data = pd.read_csv(predict_config.data_path)
         predict = pd.read_csv(predict_config.predict_result_path)
