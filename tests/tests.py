@@ -1,7 +1,9 @@
 import unittest
+import numpy as np
 import pandas as pd
 
 from ml_project.features import SquareTransformer
+from ml_project.train_pipeline import run_train_pipeline
 
 
 class SquareTransformerTest(unittest.TestCase):
@@ -31,3 +33,33 @@ class SquareTransformerTest(unittest.TestCase):
         transformer = SquareTransformer()
         result = transformer.transform(data)
         self.assertEqual(list(data), list(result.values))
+
+
+class RandomTrainDataPipelineTest(unittest.TestCase):
+    def test_random_train_data_test(self):
+        make_random_train_data(300)
+
+        run_train_pipeline("tests/random_train_config.yaml")
+        self.assertEqual(0, 0)
+
+
+
+def make_random_train_data(rows_count=500):
+    data = {
+        "age": pd.Series(np.random.randint(18, 91, size=rows_count)),
+        "sex": pd.Series(np.random.randint(0, 2, size=rows_count)),
+        "cp": pd.Series(np.random.randint(0, 4, size=rows_count)),
+        "trestbps": pd.Series(np.random.randint(94, 201, size=rows_count)),
+        "chol": pd.Series(np.random.randint(126, 565, size=rows_count)),
+        "fbs": pd.Series(np.random.randint(0, 2, size=rows_count)),
+        "restecg": pd.Series(2 * np.random.randint(0, 2, size=rows_count)),
+        "thalach": pd.Series(np.random.randint(71, 203, size=rows_count)),
+        "exang": pd.Series(np.random.randint(0, 2, size=rows_count)),
+        "oldpeak": pd.Series(6.2 * np.random.random(size=rows_count)),
+        "slope": pd.Series(np.random.randint(0, 3, size=rows_count)),
+        "ca": pd.Series(np.random.randint(0, 3, size=rows_count)),
+        "thal": pd.Series(np.random.randint(0, 3, size=rows_count)),
+        "condition": pd.Series(np.random.randint(0, 2, size=rows_count))
+    }
+    data = pd.DataFrame(data)
+    data.to_csv("tests/random_train_data.csv", index=False)

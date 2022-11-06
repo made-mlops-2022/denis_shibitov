@@ -31,8 +31,9 @@ from ml_project.models import (
 logger = logging.getLogger(__name__)
 
 
-def run_train_pipeline(training_pipeline_params):
+def run_train_pipeline(config_path):
     """Runs train pipeline"""
+    training_pipeline_params = read_training_pipeline_params(config_path)
     logger.info(
         "start train pipeline with params: %s",
         training_pipeline_params
@@ -71,21 +72,33 @@ def run_train_pipeline(training_pipeline_params):
     model = train_model(
         train_features, train_target, training_pipeline_params.train_params
     )
+    logger.info("model are trained")
 
     inference_pipeline = create_inference_pipeline(model, transformer)
+    logger.info("prediction process started")
     predicts = predict_model(
         inference_pipeline,
         val_df
     )
+
+    logger.info("calculating metrics")
     metrics = evaluate_model(
         predicts,
         val_target
     )
 
     save_object(metrics, training_pipeline_params.metric_path, save_as="json")
+    logger.info(
+        "metrics are saved to: %s",
+        training_pipeline_params.metric_path
+    )
 
     model_path = training_pipeline_params.output_model_path
     save_object(inference_pipeline, model_path)
+    logger.info(
+        "model are saved to: %s",
+        training_pipeline_params.output_model_path
+    )
 
     return model_path, metrics
 
@@ -94,9 +107,7 @@ def run_train_pipeline(training_pipeline_params):
 @click.argument("config_path")
 def train_pipeline_command(config_path: str):
     """Train pipeline entry point"""
-    # train_pipeline(config_path)
-    training_pipeline_params = read_training_pipeline_params(config_path)
-    run_train_pipeline(training_pipeline_params)
+    run_train_pipeline(config_path)
 
 
 if __name__ == "__main__":
