@@ -7,7 +7,6 @@ class SquareTransformer(BaseEstimator, TransformerMixin):
     """Square transformer class"""
 
     def fit(self, data: pd.DataFrame) -> pd.DataFrame:
-        # pylint: disable = unused-argument
         """Fit square transformer for numerical features"""
         return self
 

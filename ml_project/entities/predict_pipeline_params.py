@@ -18,6 +18,6 @@ PredictPipelineParamsSchema = class_schema(PredictPipelineParams)
 
 def read_predict_pipeline_params(path: str) -> PredictPipelineParams:
     """Read predict pipeline parameters from file"""
-    with open(path, "r") as input_stream:
+    with open(path, "r", encoding='utf-8') as input_stream:
         schema = PredictPipelineParamsSchema()
         return schema.load(yaml.safe_load(input_stream))
