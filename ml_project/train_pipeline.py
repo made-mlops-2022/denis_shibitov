@@ -5,23 +5,23 @@ import logging
 import click
 
 
-from entities import (
+from ml_project.entities import (
     read_training_pipeline_params
 )
 
-from data import (
+from ml_project.data import (
     read_data,
     split_train_val_data,
     save_object
 )
 
-from features import (
+from ml_project.features import (
     extract_target,
     build_transformer,
     make_features
 )
 
-from models import (
+from ml_project.models import (
     train_model,
     create_inference_pipeline,
     predict_model,

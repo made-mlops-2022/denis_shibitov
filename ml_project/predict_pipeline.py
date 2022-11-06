@@ -5,14 +5,14 @@ import logging
 import click
 import pandas as pd
 
-from entities import read_predict_pipeline_params
+from ml_project.entities import read_predict_pipeline_params
 
-from data import (
+from ml_project.data import (
     read_data,
     load_object
 )
 
-from models.model_fit_predict import (
+from ml_project.models.model_fit_predict import (
     predict_model
 )
 
