@@ -42,6 +42,29 @@ class AppTest(unittest.TestCase):
             'age': 49,
             'sex': 1,
             'cp': 2,
+            'trestbps': 120,
+            'chol': 188,
+            'fbs': 0,
+            'restecg': 0,
+            'thalach': 139,
+            'exang': 0,
+            'oldpeak': 2.0,
+            'slope': 1,
+            'ca': 3,
+            'thal': 2
+        }
+        response = self.client.post(
+            url='/predict',
+            content=json.dumps(request)
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), "{'condition': 1}")
+
+    def test_wrong_sex_value_400(self):
+        request = {
+            'age': 49,
+            'sex': 4,
+            'cp': 2,
             'trestbps': 118,
             'chol': 149,
             'fbs': 0,
@@ -57,78 +80,4 @@ class AppTest(unittest.TestCase):
             url='/predict',
             content=json.dumps(request)
         )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), "{'condition': 1}")
-
-
-
-#
-#
-# def test_missed_field_data():
-#     request = {
-#         'sex': 1,
-#         'cp': 0,
-#         'trestbps': 160,
-#         'chol': 234,
-#         'fbs': 1,
-#         'restecg': 2,
-#         'thalach': 131,
-#         'exang': 0,
-#         'oldpeak': 0.1,
-#         'slope': 1,
-#         'ca': 1,
-#         'thal': 0,
-#     }
-#     response = client.post(
-#         url='/predict',
-#         content=json.dumps(request)
-#     )
-#     assert response.status_code == 422
-#     assert response.json()['detail'][0]['msg'] == 'field required'
-#
-#
-# def test_wrong_numerical_value():
-#     request = {
-#         'age': 500,
-#         'sex': 1,
-#         'cp': 0,
-#         'trestbps': 160,
-#         'chol': 234,
-#         'fbs': 1,
-#         'restecg': 2,
-#         'thalach': 131,
-#         'exang': 0,
-#         'oldpeak': 0.1,
-#         'slope': 1,
-#         'ca': 1,
-#         'thal': 0,
-#     }
-#     response = client.post(
-#         url='/predict',
-#         content=json.dumps(request)
-#     )
-#     assert response.status_code == 400
-#
-#
-# def test_wrong_literal_value():
-#     request = {
-#         'age': 69,
-#         'sex': 5,
-#         'cp': 0,
-#         'trestbps': 160,
-#         'chol': 234,
-#         'fbs': 1,
-#         'restecg': 2,
-#         'thalach': 131,
-#         'exang': 0,
-#         'oldpeak': 0.1,
-#         'slope': 1,
-#         'ca': 1,
-#         'thal': 0,
-#     }
-#     response = client.post(
-#         url='/predict',
-#         content=json.dumps(request)
-#     )
-#     assert response.status_code == 422
-#     assert response.json()['detail'][0]['msg'] == 'unexpected value; permitted: 0, 1'
+        self.assertEqual(response.status_code, 400)
