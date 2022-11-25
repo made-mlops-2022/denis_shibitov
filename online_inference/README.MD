@@ -33,7 +33,7 @@ MODEL_PATH=https://disk.yandex.ru/d/CtY5RxXyYn6hfQ python -m unittest tests.py
 ~~~
 
 ### По поводу размера docker образа
-Не долго думаю, хотел изначально воспользоваться в роли базового образа
+Не долго думая, хотел изначально воспользоваться в роли базового образа
 чем то очевидным вроде "FROM ubuntu:16.04". Но для начала,
 решил проверить что используется в примерах которые предоставили:
 https://github.com/made-ml-in-prod-2021/inference_examples/blob/main/online_inference/Dockerfile
