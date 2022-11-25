@@ -2,11 +2,11 @@ FROM python:3.7-slim-stretch
 COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY model.pkl app.py person_parameters.py ./
+COPY app.py person_parameters.py ./
 
 WORKDIR .
 
-ENV MODEL_PATH="model.pkl"
+ENV MODEL_PATH="https://disk.yandex.ru/d/CtY5RxXyYn6hfQ"
 
 EXPOSE 4242
 
