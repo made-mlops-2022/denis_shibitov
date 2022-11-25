@@ -1,0 +1,19 @@
+# Folders
+.idea/
+.ipynb_checkpoints/
+.venv/
+ml_project.egg-info/
+**/__pycache__/
+build/
+.pytest_cache/
+
+
+# Files
+*.pyc
+*.coverage
+*.log
+results/**/*.csv
+results/**/*.pkl
+results/**/*.json
+tests/random_train_data.csv
+tests/obj_for_test
