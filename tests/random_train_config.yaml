@@ -1,0 +1,32 @@
+input_data_path: "tests/random_train_data.csv"
+output_model_path: "results/models/model.pkl"
+metric_path: "results/metrics/metrics.json"
+splitting_params:
+  val_size: 0.2
+  random_state: 3
+train_params:
+  model_type: "RandomForestClassifier"
+feature_params:
+  categorical_features:
+    - "sex"
+    - "cp"
+    - "fbs"
+    - "restecg"
+    - "exang"
+    - "slope"
+    - "ca"
+    - "thal"
+  numerical_features:
+    - "age"
+    - "trestbps"
+    - "chol"
+    - "thalach"
+    - "oldpeak"
+  target_col: "condition"
+use_transformers:
+  - "ohe"
+  - "square"
+square_transformer_params:
+  columns_for_square:
+    - "chol"
+    - "thalach"

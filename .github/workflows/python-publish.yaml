@@ -1,0 +1,24 @@
+name: continuous integration
+on: [push, pull_request]
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: install
+        run: |
+          sudo apt update
+          sudo apt install python3
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
+          python -m pip install flake8 pylint
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          sudo pip install .
+      - name: linters
+        run: |
+          pylint ml_project
+          flake8 ml_project
+      - name: tests
+        run: |
+          python -m unittest discover tests
