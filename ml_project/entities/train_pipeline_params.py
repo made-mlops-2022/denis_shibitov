@@ -21,12 +21,9 @@ class TrainingPipelineParams:
     splitting_params: SplittingParams
     feature_params: FeatureParams
     train_params: TrainingParams
-    use_transformers: Optional[List[str]] = None
+    use_transformers: List[str] = None
     square_transformer_params: Optional[SquareTransformerParams] = None
-    # downloading_params: Optional[DownloadParams] = None
     use_mlflow: bool = False
-    # mlflow_uri: str = "http://18.156.5.226/"
-    # mlflow_experiment: str = "inference_demo"
 
 
 TrainingPipelineParamsSchema = class_schema(TrainingPipelineParams)

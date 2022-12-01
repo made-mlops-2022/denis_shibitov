@@ -28,7 +28,7 @@ def train_model(features: pd.DataFrame,
     elif train_params.model_type == 'RandomForestClassifier':
         model = RandomForestClassifier()
     else:
-        raise NotImplementedError()
+        raise NotImplementedError(f'Unknown model type:{train_params.model_type}')
 
     model.fit(features, target)
 
