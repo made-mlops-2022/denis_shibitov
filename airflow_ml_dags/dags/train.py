@@ -7,6 +7,14 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 
+default_args = {
+    'owner': 'airflow',
+    'start_date': days_ago(1),
+    'email': ['ttwtest1@gmail.com'],
+    'email_on_failure': True
+}
+
+
 def _wait_for_files(*args):
     for file_path in args:
         if not os.path.exists(file_path):
@@ -18,7 +26,8 @@ with DAG(
     "train",
     catchup=False,
     start_date=days_ago(8),
-    schedule_interval="0 6 * * 1"
+    schedule_interval="0 6 * * 1",
+    default_args=default_args
 ) as dag:
     wait_for_data = PythonSensor(
         task_id="wait_for_data",

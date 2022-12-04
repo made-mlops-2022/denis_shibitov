@@ -5,11 +5,20 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 
+default_args = {
+    'owner': 'airflow',
+    'start_date': days_ago(1),
+    'email': ['ttwtest1@gmail.com'],
+    'email_on_failure': True
+}
+
+
 with DAG(
         "generate_data",
         catchup=False,
         start_date=days_ago(1),
-        schedule_interval="0 5 * * *"
+        schedule_interval="0 5 * * *",
+        default_args=default_args
 ) as dag:
     generate_data = DockerOperator(
         image="airflow-generator",

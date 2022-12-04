@@ -10,6 +10,14 @@ from docker.types import Mount
 DEFAULT_MODEL_PATH = "/data/models/2022-12-02/model.pkl"
 
 
+default_args = {
+    'owner': 'airflow',
+    'start_date': days_ago(1),
+    'email': ['ttwtest1@gmail.com'],
+    'email_on_failure': True
+}
+
+
 def _wait_for_files(*args):
     for file_path in args:
         if not os.path.exists(file_path):
@@ -21,7 +29,8 @@ with DAG(
     "predict",
     catchup=False,
     start_date=days_ago(1),
-    schedule_interval="0 7 * * *"
+    schedule_interval="0 7 * * *",
+    default_args=default_args
 ) as dag:
     wait_for_data = PythonSensor(
         task_id="wait_for_data",
