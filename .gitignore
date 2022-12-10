@@ -6,6 +6,7 @@ ml_project.egg-info/
 **/__pycache__/
 build/
 .pytest_cache/
+airflow_ml_dags/data/
 
 
 # Files
