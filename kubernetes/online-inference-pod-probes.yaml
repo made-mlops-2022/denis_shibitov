@@ -11,12 +11,14 @@ spec:
       ports:
         - containerPort: 4242
       readinessProbe:
+        failureThreshold: 10
         httpGet:
           path: /health
           port: 4242
         initialDelaySeconds: 10
         periodSeconds: 5
       livenessProbe:
+        failureThreshold: 20
         httpGet:
           path: /health
           port: 4242

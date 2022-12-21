@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: online-inference-deployment-roll
+  labels:
+    app: online-inference
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: online-inference
+  template:
+    metadata:
+      name: online-inference-deployment-roll
+      labels:
+        app: online-inference
+    spec:
+      containers:
+        - image: ymet/made_oi:v1
+          name: online-inference
+          ports:
+            - containerPort: 4242
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
