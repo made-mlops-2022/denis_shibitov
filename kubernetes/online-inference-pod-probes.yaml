@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference-probes
+  labels:
+    app: online-inference-probes
+spec:
+  containers:
+    - image: ymet/made_oi:v2
+      name: online-inference-probes
+      ports:
+        - containerPort: 4242
+      readinessProbe:
+        failureThreshold: 10
+        httpGet:
+          path: /health
+          port: 4242
+        initialDelaySeconds: 10
+        periodSeconds: 5
+      livenessProbe:
+        failureThreshold: 20
+        httpGet:
+          path: /health
+          port: 4242
+        initialDelaySeconds: 50
+        periodSeconds: 5
